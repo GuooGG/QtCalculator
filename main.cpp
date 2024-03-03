@@ -1,6 +1,5 @@
 #include "widget.h"
 #include "calculator.h"
-
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -9,6 +8,8 @@ Calculator calculator;
 
 int main(int argc, char *argv[])
 {
+
+
     QApplication a(argc, argv);
 
     QTranslator translator;

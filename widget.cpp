@@ -19,6 +19,7 @@ void Widget::refresh()
 }
 
 
+//数字键
 void Widget::on_zero_button_clicked()
 {
     calculator.input("0");
@@ -117,13 +118,19 @@ void Widget::on_minus_button_clicked()
 
 void Widget::on_multiply_button_clicked()
 {
-    calculator.input("×");
+    calculator.input("*");
     refresh();
 }
 
 void Widget::on_divided_button_clicked()
 {
-    calculator.input("÷");
+    calculator.input("/");
+    refresh();
+}
+
+void Widget::on_equal_button_clicked()
+{
+    calculator.calculate();
     refresh();
 }
 

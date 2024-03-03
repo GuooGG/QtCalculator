@@ -45,7 +45,8 @@ private slots:
     void on_minus_button_clicked();
     void on_multiply_button_clicked();
     void on_divided_button_clicked();
-
+    //等于号
+    void on_equal_button_clicked();
 private:
     Ui::Widget *ui;
 };
