@@ -2,6 +2,9 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include "calculator.h"
+
+extern Calculator calculator;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +20,27 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+    void refresh();
+
+private slots:
+    //数字键
+    void on_zero_button_clicked();
+    void on_one_button_clicked();
+    void on_two_button_clicked();
+    void on_three_button_clicked();
+    void on_four_button_clicked();
+    void on_five_button_clicked();
+    void on_six_button_clicked();
+    void on_seven_button_clicked();
+    void on_eight_button_clicked();
+    void on_nine_button_clicked();
+    //清除键
+    void on_clear_button_clicked();
+    void on_del_button_clicked();
+
 private:
     Ui::Widget *ui;
 };
+
+
 #endif // WIDGET_H

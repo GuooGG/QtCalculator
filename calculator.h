@@ -10,14 +10,19 @@ class Calculator
 public:
     Calculator();
     virtual void Calculate(QStack<char> equation);
+    virtual void input(char ch);
+    virtual void clear();
+    virtual void back();
+
+    const QString& getExpression() const { return m_expression; }
 
 protected:
     QString EquationTOString(QStack<char> equation);
 
 private:
     QStack<char> m_equation;
-    QQueue<QString> m_logs;
-    uint32_t m_max_log_count;
+    QString m_expression;
 };
+
 
 #endif // CALCULATOR_H

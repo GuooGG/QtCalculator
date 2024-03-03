@@ -483,7 +483,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLineEdit" name="last_edit_expression">
+  <widget class="QLineEdit" name="now_edit_expression">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -493,7 +493,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="now_edit_expression">
+  <widget class="QLineEdit" name="last_edit_expression">
    <property name="geometry">
     <rect>
      <x>10</x>
