@@ -10,17 +10,17 @@ class Calculator
 public:
     Calculator();
     virtual void Calculate(QStack<char> equation);
-    virtual void input(char ch);
+    virtual void input(QString ch);
     virtual void clear();
     virtual void back();
 
     const QString& getExpression() const { return m_expression; }
 
 protected:
-    QString EquationTOString(QStack<char> equation);
+    double polishCal(QStack<char> polishEquation);
+    QStack<char> expressionToPolish(QString expression);
 
 private:
-    QStack<char> m_equation;
     QString m_expression;
 };
 

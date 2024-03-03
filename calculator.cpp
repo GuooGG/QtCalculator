@@ -4,7 +4,7 @@ Calculator::Calculator() {}
 
 void Calculator::Calculate(QStack<char> equation) {}
 
-void Calculator::input(char ch)
+void Calculator::input(QString ch)
 {
     m_expression.append(ch);
 }

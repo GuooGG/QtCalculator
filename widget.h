@@ -37,6 +37,14 @@ private slots:
     //清除键
     void on_clear_button_clicked();
     void on_del_button_clicked();
+    //括号键
+    void on_left_parenthesis_button_clicked();
+    void on_right_parenthesis_button_clicked();
+    //四则运算符键
+    void on_add_button_clicked();
+    void on_minus_button_clicked();
+    void on_multiply_button_clicked();
+    void on_divided_button_clicked();
 
 private:
     Ui::Widget *ui;
