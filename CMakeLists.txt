@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Calculator VERSION 0.1 LANGUAGES CXX)
+project(QtCalculator VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
-set(TS_FILES Calculator_zh_CN.ts)
+set(TS_FILES QtCalculator_zh_CN.ts)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -23,26 +23,27 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Calculator
+    qt_add_executable(QtCalculator
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         calculator.h calculator.cpp
+
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Calculator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET QtCalculator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
-        add_library(Calculator SHARED
+        add_library(QtCalculator SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(Calculator
+        add_executable(QtCalculator
             ${PROJECT_SOURCES}
         )
     endif()
@@ -50,15 +51,15 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(Calculator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(QtCalculator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Calculator)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.QtCalculator)
 endif()
-set_target_properties(Calculator PROPERTIES
+set_target_properties(QtCalculator PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -67,14 +68,12 @@ set_target_properties(Calculator PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS Calculator
+install(TARGETS QtCalculator
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Calculator)
+    qt_finalize_executable(QtCalculator)
 endif()
-
-
