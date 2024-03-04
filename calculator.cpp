@@ -18,6 +18,7 @@ void Calculator::back()
 
 double Calculator::calculate()
 {
+    m_last_expression = m_expression;
     QVector<QString> polishEquation = expressionToPolish(m_expression);
     double res = polishCal(polishEquation);
     m_expression = QString::number(res);

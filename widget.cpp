@@ -16,6 +16,7 @@ Widget::~Widget()
 void Widget::refresh()
 {
     ui->now_edit_expression->setText(calculator.getExpression());
+    ui->last_edit_expression->setText(calculator.getLastExpression());
 }
 
 
@@ -134,12 +135,22 @@ void Widget::on_dot_button_clicked()
     refresh();
 }
 
+void Widget::on_pai_button_clicked()
+{
+    calculator.input("3.141592");
+    refresh();
+}
+
+void Widget::on_e_button_clicked()
+{
+    calculator.input("2.718281");
+    refresh();
+}
+
 void Widget::on_equal_button_clicked()
 {
-    QString expression = calculator.getExpression();
     calculator.calculate();
     refresh();
-    ui->last_edit_expression->setText(expression);
 }
 
 void Widget::on_abs_button_clicked()
@@ -148,9 +159,81 @@ void Widget::on_abs_button_clicked()
     double res = abs(calculator.calculate());
     expression = "abs(" + expression + ")";
     calculator.setExpression(QString::number(res));
-    ui->last_edit_expression->setText(expression);
+    calculator.setLastExpression(expression);
     refresh();
 }
+
+void Widget::on_sign_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = 0 - calculator.calculate();
+    expression = "-(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_inverse_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = 1 / calculator.calculate();
+    expression = "1/(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_squre_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = pow(calculator.calculate(),2);
+    expression = "(" + expression + ")^2";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_sqrt_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = sqrt(calculator.calculate());
+    expression = "sqrt(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_tenfold_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = pow(10,calculator.calculate());
+    expression = "10^(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_log_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = log10(calculator.calculate());
+    expression = "log(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+void Widget::on_ln_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = log(calculator.calculate());
+    expression = "ln(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    calculator.setLastExpression(expression);
+    refresh();
+}
+
+
 
 
 

@@ -47,9 +47,19 @@ private slots:
     void on_divided_button_clicked();
     // 小数点
     void on_dot_button_clicked();
+    //添加特殊数值
+    void on_pai_button_clicked();
+    void on_e_button_clicked();
     //运算结果
     void on_equal_button_clicked();
     void on_abs_button_clicked();
+    void on_sign_button_clicked();
+    void on_inverse_button_clicked();
+    void on_squre_button_clicked();
+    void on_sqrt_button_clicked();
+    void on_tenfold_button_clicked();
+    void on_log_button_clicked();
+    void on_ln_button_clicked();
 private:
     Ui::Widget *ui;
 };

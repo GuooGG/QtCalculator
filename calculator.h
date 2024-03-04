@@ -27,6 +27,8 @@ public:
     virtual double calculate();
     const QString& getExpression() const { return m_expression; }
     void setExpression(const QString& v) { m_expression = v; }
+    const QString& getLastExpression() const { return m_last_expression; }
+    void setLastExpression(const QString& v) { m_last_expression = v; }
 protected:
     double polishCal(QVector<QString> polishEquation);
     QVector<QString> expressionToPolish(QString expression);
@@ -34,7 +36,9 @@ protected:
 
 private:
     QString m_expression;
+    QString m_last_expression;
     Error m_error;
+    bool m_second_function;
 
 };
 
