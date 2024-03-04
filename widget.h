@@ -2,7 +2,12 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QString>
+#include <QVector>
 #include "calculator.h"
+#include "qpushbutton.h"
+#include <QPair>
+#include <QMap>
 
 extern Calculator calculator;
 
@@ -21,7 +26,11 @@ public:
     ~Widget();
 
     void refresh();
-
+private:
+    void second_function_ui();
+    void first_function_ui();
+    void addSecondFunctionButton(QPushButton* button, const QString& first, const QString& second);
+    void initSecondFunctionButton();
 private slots:
     //数字键
     void on_zero_button_clicked();
@@ -50,6 +59,8 @@ private slots:
     //添加特殊数值
     void on_pai_button_clicked();
     void on_e_button_clicked();
+    //开启第二功能
+    void on_second_function_button_clicked();
     //运算结果
     void on_equal_button_clicked();
     void on_abs_button_clicked();
@@ -62,7 +73,10 @@ private slots:
     void on_ln_button_clicked();
 private:
     Ui::Widget *ui;
+    QVector<QPair<QPushButton*, QPair<QString,QString>>> m_second_function_buttons;
 };
+
+
 
 
 #endif // WIDGET_H

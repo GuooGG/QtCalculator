@@ -1,5 +1,12 @@
 #include "calculator.h"
-Calculator::Calculator() {}
+Calculator::Calculator()
+    :m_error(Error::OK)
+    ,m_second_function(false)
+{
+    m_expression.clear();
+    m_last_expression.clear();
+}
+
 
 void Calculator::input(QString ch)
 {
@@ -23,6 +30,11 @@ double Calculator::calculate()
     double res = polishCal(polishEquation);
     m_expression = QString::number(res);
     return res;
+}
+
+void Calculator::switch_second_function()
+{
+    m_second_function = m_second_function ? false : true;
 }
 
 bool isNum(QString str)

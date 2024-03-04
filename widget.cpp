@@ -6,6 +6,15 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    initSecondFunctionButton();
+}
+
+void Widget::initSecondFunctionButton()
+{
+    addSecondFunctionButton(ui->squre_button, "x^2", "x^3");
+    addSecondFunctionButton(ui->ln_button, "ln", "e^x");
+    addSecondFunctionButton(ui->tenfold_button, "10^x", "2^x");
 }
 
 Widget::~Widget()
@@ -18,7 +27,6 @@ void Widget::refresh()
     ui->now_edit_expression->setText(calculator.getExpression());
     ui->last_edit_expression->setText(calculator.getLastExpression());
 }
-
 
 //数字键
 void Widget::on_zero_button_clicked()
@@ -145,6 +153,43 @@ void Widget::on_e_button_clicked()
 {
     calculator.input("2.718281");
     refresh();
+}
+
+void Widget::second_function_ui()
+{
+    //TODO::更改按键颜色
+    //TODO::更改按键显示
+
+    for(auto& it : m_second_function_buttons){
+        it.first->setText(it.second.second);
+    }
+}
+
+void Widget::first_function_ui()
+{
+    for(auto& it : m_second_function_buttons){
+        it.first->setText(it.second.first);
+    }
+}
+
+void Widget::addSecondFunctionButton(QPushButton *button, const QString &first, const QString &second)
+{
+    m_second_function_buttons.append(qMakePair(button, qMakePair(first, second)));
+}
+
+
+void Widget::on_second_function_button_clicked()
+{
+    //更新按键样式
+    if(calculator.getSecondFunctionState())
+    {
+        first_function_ui();
+    }
+    else{
+        second_function_ui();
+    }
+    //更改实际功能
+    calculator.switch_second_function();
 }
 
 void Widget::on_equal_button_clicked()
