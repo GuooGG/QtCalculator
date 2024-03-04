@@ -1,5 +1,4 @@
 #include "calculator.h"
-
 Calculator::Calculator() {}
 
 void Calculator::input(QString ch)
@@ -64,7 +63,7 @@ double Calculator::polishCal(QVector<QString> polishEquation)
                     if(item == "/" && num2 == 0){
                         m_error = Error::DIVIDE_ZERO;
                     }
-                    stk.push(cal(item, num1, num2));
+                    stk.push(cal(item, num2, num1));
         }else{
             m_error = Error::UNKNOWN_ELEMENT;
         }

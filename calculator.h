@@ -26,7 +26,6 @@ public:
     virtual void back();
     virtual void calculate();
     const QString& getExpression() const { return m_expression; }
-
 protected:
     double polishCal(QVector<QString> polishEquation);
     QVector<QString> expressionToPolish(QString expression);
@@ -35,6 +34,7 @@ protected:
 private:
     QString m_expression;
     Error m_error;
+
 };
 
 
