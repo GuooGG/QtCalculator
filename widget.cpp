@@ -128,9 +128,27 @@ void Widget::on_divided_button_clicked()
     refresh();
 }
 
+void Widget::on_dot_button_clicked()
+{
+    calculator.input(".");
+    refresh();
+}
+
 void Widget::on_equal_button_clicked()
 {
+    QString expression = calculator.getExpression();
     calculator.calculate();
+    refresh();
+    ui->last_edit_expression->setText(expression);
+}
+
+void Widget::on_abs_button_clicked()
+{
+    QString expression = calculator.getExpression();
+    double res = abs(calculator.calculate());
+    expression = "abs(" + expression + ")";
+    calculator.setExpression(QString::number(res));
+    ui->last_edit_expression->setText(expression);
     refresh();
 }
 

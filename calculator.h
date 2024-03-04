@@ -24,8 +24,9 @@ public:
     virtual void input(QString ch);
     virtual void clear();
     virtual void back();
-    virtual void calculate();
+    virtual double calculate();
     const QString& getExpression() const { return m_expression; }
+    void setExpression(const QString& v) { m_expression = v; }
 protected:
     double polishCal(QVector<QString> polishEquation);
     QVector<QString> expressionToPolish(QString expression);
