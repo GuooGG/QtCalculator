@@ -52,15 +52,13 @@ double Calculator::polishCal(QVector<QString> polishEquation)
         if(isNum(item))
         {
             stk.push(item.toDouble());
-        }else if(item == "+"
-                || item == "-"
-                || item == "*"
-                || item == "/")
+        }else if(m_operatorPriority.find(item) != m_operatorPriority.end())
         {
                     if(stk.size() < 2 && item != "-"){
                         m_error = Error::SYNTAX_ERROR;
                     }
-                    double num1 = stk.top();stk.pop();
+                    double num1 = stk.empty() ? 0 : stk.top();
+                    if(!stk.empty()){ stk.pop(); }
                     double num2 = stk.empty() ? 0 : stk.top();
                     if(!stk.empty()){ stk.pop(); }
                     if(item == "/" && num2 == 0){
@@ -79,67 +77,69 @@ double Calculator::polishCal(QVector<QString> polishEquation)
 
 QVector<QString> Calculator::expressionToPolish(QString expression)
 {
-    QVector<QString> polish;
-    QStack<QString> stk;
+    QVector<QString> postfixExpression;
+    QStack<QString> operatorStack;
+    m_operatorPriority["+"] = 1;
+    m_operatorPriority["-"] = 1;
+    m_operatorPriority["*"] = 2;
+    m_operatorPriority["/"] = 2;
+    m_operatorPriority["%"] = 2;
+    m_operatorPriority["^"] = 3;
+    m_operatorPriority["r"] = 3;
+    m_operatorPriority["b"] = 3;
+    m_operatorPriority["e"] = 3;
+
     QString num = "";
     for(QChar& ch: expression)
     {
         if(ch.isDigit() || ch == '.')
         {
             num += ch;
-        }else{
+        }
+        else
+        {
             if(!num.isEmpty())
             {
-                polish.push_back(num);
+                postfixExpression.push_back(num);
                 num.clear();
             }
-            if(ch == '+' || ch == '-')
+            if(ch == '(')
             {
-                if(ch == '-' && !stk.empty() && stk.top() == "("){
-                    polish.push_back("0");
-                }
-                while(!stk.empty() && (stk.top() == "+" || stk.top() == "-" || stk.top() == "*" || stk.top() == "/"))
-                {
-                    polish.push_back(stk.top());
-                    stk.pop();
-                }
-                stk.push(ch);
-            }else if(ch == '*' || ch == '/')
+                operatorStack.push(ch);
+            }
+            else if(ch == ')')
             {
-                while(!stk.empty() && (stk.top() == "*" || stk.top() == "/"))
+                while(!operatorStack.empty() && operatorStack.top() != "(")
                 {
-                    polish.push_back(stk.top());
-                    stk.pop();
+                    postfixExpression.push_back(operatorStack.pop());
                 }
-                stk.push(ch);
-            }else if(ch == '(')
+                if(!operatorStack.empty())
+                {
+                    operatorStack.pop();
+                }
+            }
+            else
             {
-                stk.push(ch);
-            }else if(ch == ')')
-            {
-                while(!stk.empty() && stk.top() != "(")
+                QString op(1, ch);
+                while(!operatorStack.empty() && m_operatorPriority[op] <= m_operatorPriority[operatorStack.top()])
                 {
-                    polish.push_back(stk.top());
-                    stk.pop();
+                    postfixExpression.push_back(operatorStack.pop());
                 }
-                if(!stk.empty())
-                {
-                    stk.pop();
-                }
+                operatorStack.push(op);
             }
         }
     }
     if(!num.isEmpty())
     {
-        polish.push_back(num);
+        postfixExpression.push_back(num);
     }
-    while(!stk.empty())
+    while(!operatorStack.empty())
     {
-        polish.push_back(stk.top());
-        stk.pop();
+        postfixExpression.push_back(operatorStack.pop());
     }
-    return polish;
+    return postfixExpression;
 }
+
 
 double Calculator::cal(QString op, double a, double b)
 {
@@ -151,6 +151,16 @@ double Calculator::cal(QString op, double a, double b)
         return a * b;
     }else if(op == "/"){
         return a / b;
+    }else if(op == "%"){
+        return fmod(a , b);
+    }else if(op == "^"){
+        return pow(a, b);
+    }else if(op == "r"){
+        return pow(a, 1.0/b);
+    }else if(op == "b"){
+        return log(a) / log(b);
+    }else if(op == "e"){
+        return pow(10 , b) * a;
     }
     return 0;
 }

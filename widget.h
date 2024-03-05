@@ -71,6 +71,10 @@ private slots:
     void on_tenfold_button_clicked();
     void on_log_button_clicked();
     void on_ln_button_clicked();
+    void on_mod_button_clicked();
+    void on_power_button_clicked();
+    void on_exp_button_clicked();
+    void on_factorial_button_clicked();
 private:
     Ui::Widget *ui;
     QVector<QPair<QPushButton*, QPair<QString,QString>>> m_second_function_buttons;

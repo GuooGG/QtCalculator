@@ -15,6 +15,9 @@ void Widget::initSecondFunctionButton()
     addSecondFunctionButton(ui->squre_button, "x^2", "x^3");
     addSecondFunctionButton(ui->ln_button, "ln", "e^x");
     addSecondFunctionButton(ui->tenfold_button, "10^x", "2^x");
+    addSecondFunctionButton(ui->sqrt_button, "sqrt(x)", "x^(1/3)");
+    addSecondFunctionButton(ui->power_button, "x^y", "x^(1/y)");
+    addSecondFunctionButton(ui->log_button, "log", "logy(x)");
 }
 
 Widget::~Widget()
@@ -230,52 +233,155 @@ void Widget::on_inverse_button_clicked()
 
 void Widget::on_squre_button_clicked()
 {
-    QString expression = calculator.getExpression();
-    double res = pow(calculator.calculate(),2);
-    expression = "(" + expression + ")^2";
-    calculator.setExpression(QString::number(res));
-    calculator.setLastExpression(expression);
-    refresh();
+    if(!calculator.getSecondFunctionState())
+    {
+        QString expression = calculator.getExpression();
+        double res = pow(calculator.calculate(),2);
+        expression = "(" + expression + ")^2";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }else
+    {
+        QString expression = calculator.getExpression();
+        double res = pow(calculator.calculate(),3);
+        expression = "(" + expression + ")^3";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }
+
 }
 
 void Widget::on_sqrt_button_clicked()
 {
-    QString expression = calculator.getExpression();
-    double res = sqrt(calculator.calculate());
-    expression = "sqrt(" + expression + ")";
-    calculator.setExpression(QString::number(res));
-    calculator.setLastExpression(expression);
-    refresh();
+    if(!calculator.getSecondFunctionState())
+    {
+        QString expression = calculator.getExpression();
+        double res = sqrt(calculator.calculate());
+        expression = "sqrt(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }else
+    {
+        QString expression = calculator.getExpression();
+        double res = pow(calculator.calculate(), 1.0/3);
+        expression = "(" + expression + ")^(1/3)";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }
+
 }
 
 void Widget::on_tenfold_button_clicked()
 {
-    QString expression = calculator.getExpression();
-    double res = pow(10,calculator.calculate());
-    expression = "10^(" + expression + ")";
-    calculator.setExpression(QString::number(res));
-    calculator.setLastExpression(expression);
-    refresh();
+    if(!calculator.getSecondFunctionState())
+    {
+        QString expression = calculator.getExpression();
+        double res = pow(10,calculator.calculate());
+        expression = "10^(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }else
+    {
+        QString expression = calculator.getExpression();
+        double res = pow(2,calculator.calculate());
+        expression = "2^(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }
+
 }
 
 void Widget::on_log_button_clicked()
 {
-    QString expression = calculator.getExpression();
-    double res = log10(calculator.calculate());
-    expression = "log(" + expression + ")";
-    calculator.setExpression(QString::number(res));
-    calculator.setLastExpression(expression);
-    refresh();
+    if(!calculator.getSecondFunctionState())
+    {
+        QString expression = calculator.getExpression();
+        double res = log10(calculator.calculate());
+        expression = "log(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }else
+    {
+        calculator.input("b");
+        refresh();
+    }
+
 }
 
 void Widget::on_ln_button_clicked()
 {
+    if(!calculator.getSecondFunctionState())
+    {
+        QString expression = calculator.getExpression();
+        double res = log(calculator.calculate());
+        expression = "ln(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }else
+    {
+        QString expression = calculator.getExpression();
+        double res = exp(calculator.calculate());
+        expression = "e^(" + expression + ")";
+        calculator.setExpression(QString::number(res));
+        calculator.setLastExpression(expression);
+        refresh();
+    }
+
+}
+
+void Widget::on_mod_button_clicked()
+{
+    calculator.input("%");
+    refresh();
+}
+
+void Widget::on_power_button_clicked()
+{
+    if(!calculator.getSecondFunctionState())
+    {
+        calculator.input("^");
+        refresh();
+    }else
+    {
+        calculator.input("r");
+        refresh();
+    }
+
+}
+
+void Widget::on_exp_button_clicked()
+{
+    calculator.input("e");
+    refresh();
+}
+
+void Widget::on_factorial_button_clicked()
+{
     QString expression = calculator.getExpression();
-    double res = log(calculator.calculate());
-    expression = "ln(" + expression + ")";
+    int i = expression.size() - 1;
+    while(i >= 0 && (expression[i].isDigit() || expression[i] == '.'))
+    {
+        i--;
+    }
+    QString number = expression.mid(i + 1);
+    double num = number.toDouble();
+    double res = tgamma(num + 1);
+    expression.insert(i + 1, '(');
+    expression.append(")!");
     calculator.setExpression(QString::number(res));
     calculator.setLastExpression(expression);
     refresh();
+    expression.chop(3 + number.size());
+    expression += QString::number(res);
+    calculator.setExpression(expression);
 }
 
 

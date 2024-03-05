@@ -4,6 +4,7 @@
 #include <QStack>
 #include <QString>
 #include <QVector>
+#include <QMap>
 
 class Calculator
 {
@@ -20,9 +21,6 @@ public:
         UNKNOWN_ELEMENT = 3,
     };
 
-    enum class State{
-
-    };
 
     /// @brief 构造函数
     Calculator();
@@ -71,7 +69,7 @@ protected:
     QVector<QString> expressionToPolish(QString expression);
 
     /// @brief 一次四则计算
-    /// @param op 运算符号 +-*/
+    /// @param op 运算符号
     /// @param a 操作数一
     /// @param b 操作数二
     /// @return 计算结果
@@ -82,12 +80,12 @@ private:
     QString m_expression;
     // 上一次操作的表达式
     QString m_last_expression;
-    // 计算器当前状态
-    State m_state;
     // 计算器当前错误码
     Error m_error;
     // 是否开启第二功能
     bool m_second_function;
+    // 运算符与优先级映射
+    QMap<QString, int> m_operatorPriority;
 
 };
 
